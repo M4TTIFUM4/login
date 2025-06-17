@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            background-color: #2196F3;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0b7dda;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            background-color: #aaa;
+        }
+
+        .back-button:hover {
+            background-color: #888;
+        }
+    </style>
+</head>
+<body>
+<h1>Login</h1>
+<form action="/autenticazione" method="post">
+    <input type="text" name="username" placeholder="Nome utente" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Accedi</button>
+</form>
+<button class="back-button" onclick="location.href='home.html'">← Torna alla Home</button>
+</body>
+</html>
