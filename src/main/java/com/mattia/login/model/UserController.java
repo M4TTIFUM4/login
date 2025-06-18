@@ -1,5 +1,6 @@
 package com.mattia.login.model;
 
+import com.mattia.login.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -8,12 +9,15 @@ import org.springframework.web.servlet.view.RedirectView;
 public class UserController {
 
     @Autowired
-    private JsonFileService jsonFileService;
+    private UserService userService;
 
     @PostMapping("/registrati")
     public RedirectView registra(@RequestParam String username, @RequestParam String password) {
-        Utente nuovo = new Utente(username, password);
-        jsonFileService.salvaUtente(nuovo);
-        return new RedirectView("/successo.html");
+        boolean success = userService.registra(username, password);
+        if (success) {
+            return new RedirectView("/successo.html");
+        } else {
+            return new RedirectView("/errore.html");
+        }
     }
 }
