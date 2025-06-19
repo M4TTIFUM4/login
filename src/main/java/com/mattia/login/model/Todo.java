@@ -10,32 +10,45 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String testo;
+    private String descrizione;
 
     private boolean completato;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Todo() {}
+    public Long getId() {
+        return id;
+    }
 
-    public Todo(String testo, boolean completato, User user) {
-        this.testo = testo;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public boolean isCompletato() {
+        return completato;
+    }
+
+    public void setCompletato(boolean completato) {
         this.completato = completato;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 
-    // GETTER/SETTER
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getTesto() { return testo; }
-    public void setTesto(String testo) { this.testo = testo; }
-
-    public boolean isCompletato() { return completato; }
-    public void setCompletato(boolean completato) { this.completato = completato; }
-
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    // getter e setter
 }

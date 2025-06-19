@@ -18,20 +18,24 @@ public class TodoService {
         return todoRepository.findByUser(user);
     }
 
-    public Todo addTodo(User user, String testo) {
-        Todo todo = new Todo(testo, false, user);
+    public Todo addTodo(User user, String descrizione) {
+        System.out.println("ciaoooo");
+        Todo todo = new Todo();
+        todo.setUser(user);
+        todo.setDescrizione(descrizione);
+        todo.setCompletato(false);
+
         return todoRepository.save(todo);
+    }
+
+    public void toggleCompletato(Long id) {
+        todoRepository.findById(id).ifPresent(todo -> {
+            todo.setCompletato(!todo.isCompletato());
+            todoRepository.save(todo);
+        });
     }
 
     public void deleteTodo(Long id) {
         todoRepository.deleteById(id);
-    }
-
-    public void toggleCompletato(Long id) {
-        Todo todo = todoRepository.findById(id).orElse(null);
-        if (todo != null) {
-            todo.setCompletato(!todo.isCompletato());
-            todoRepository.save(todo);
-        }
     }
 }

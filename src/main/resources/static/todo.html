@@ -68,7 +68,7 @@
     li {
       padding: 10px;
       border-bottom: 1px solid #ddd;
-      word-wrap: break-word; /* per adattare testi lunghi */
+      word-wrap: break-word;
     }
   </style>
 </head>
@@ -87,17 +87,36 @@
   const input = document.getElementById('todo-input');
   const list = document.getElementById('todo-list');
 
+  const params = new URLSearchParams(window.location.search);
+  const username = params.get('username');
+
+  function caricaTodo() {
+    fetch(`/api/todos?username=${username}`)
+      .then(res => res.json())
+      .then(data => {
+        list.innerHTML = '';
+        data.forEach(todo => {
+          const li = document.createElement('li');
+          li.textContent = todo.descrizione + (todo.completato ? ' ✅' : '');
+          list.appendChild(li);
+        });
+      });
+  }
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     const task = input.value.trim();
-    if(task) {
-      const li = document.createElement('li');
-      li.textContent = task;
-      list.appendChild(li);
-      input.value = '';
-      input.focus();
+    if (task && username) {
+      fetch(`/api/todos/addTodo?username=${username}&descrizione=${encodeURIComponent(task)}`, {
+        method: 'POST'
+      }).then(() => {
+        input.value = '';
+        caricaTodo();
+      });
     }
   });
+
+  caricaTodo();
 </script>
 </body>
 </html>
