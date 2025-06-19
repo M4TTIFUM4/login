@@ -19,7 +19,6 @@ public class TodoService {
     }
 
     public Todo addTodo(User user, String descrizione) {
-        System.out.println("ciaoooo");
         Todo todo = new Todo();
         todo.setUser(user);
         todo.setDescrizione(descrizione);

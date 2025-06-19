@@ -5,27 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>To-Do List</title>
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f0f2f5;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
     }
 
     .container {
-      width: 100%;
       max-width: 600px;
-      background: white;
+      margin: 0 auto;
       padding: 20px;
+      background: white;
+      min-height: 100vh;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
     }
 
     h1 {
       text-align: center;
       color: #333;
+      margin-bottom: 20px;
     }
 
     form {
@@ -35,7 +37,7 @@
     }
 
     input[type="text"] {
-      flex-grow: 1;
+      flex: 1;
       padding: 10px;
       font-size: 16px;
       border: 1px solid #ccc;
@@ -57,12 +59,11 @@
       background-color: #0056b3;
     }
 
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-      max-height: 400px;
+    #todo-list {
       overflow-y: auto;
+      flex-grow: 1;
       border-top: 1px solid #ddd;
+      padding-top: 10px;
     }
 
     li {
@@ -92,15 +93,16 @@
 
   function caricaTodo() {
     fetch(`/api/todos?username=${username}`)
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
-        list.innerHTML = '';
+        list.innerHTML = ''; // Svuota la lista
         data.forEach(todo => {
           const li = document.createElement('li');
           li.textContent = todo.descrizione + (todo.completato ? ' ✅' : '');
           list.appendChild(li);
         });
-      });
+      })
+      .catch(err => console.error('Errore nel caricamento:', err));
   }
 
   form.addEventListener('submit', function(e) {
@@ -111,11 +113,12 @@
         method: 'POST'
       }).then(() => {
         input.value = '';
-        caricaTodo();
-      });
+        caricaTodo(); // ricarica la lista
+      }).catch(err => console.error('Errore durante l\'aggiunta:', err));
     }
   });
 
+  // carica la lista all'apertura della pagina
   caricaTodo();
 </script>
 </body>
